@@ -22,9 +22,11 @@ document
       });
 
       if (response.ok) {
-        window.location.href = '../index.html';
+        window.location.href = "../index.html";
       } else {
-        alert("Registration failed");
+        response.json().then((data) => {
+          alert(data.message);
+        });
       }
     } catch (error) {
       alert("Error registering: " + error.message);

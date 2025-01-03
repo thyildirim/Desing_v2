@@ -20,9 +20,11 @@ document
       });
 
       if (response.ok) {
-        window.location.href = '../index.html';
+        window.location.href = "../index.html";
       } else {
-        alert("Login failed");
+        response.json().then((data) => {
+          alert(data.message);
+        });
       }
     } catch (error) {
       alert("Error logging in: " + error.message);
