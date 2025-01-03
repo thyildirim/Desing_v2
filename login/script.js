@@ -23,6 +23,7 @@ document
         const data = await response.json();
         alert("Login successful!");
         console.log(data);
+        window.location.href = '../index.html';
       } else {
         alert("Login failed");
       }
