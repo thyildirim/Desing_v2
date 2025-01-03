@@ -22,9 +22,6 @@ document
       });
 
       if (response.ok) {
-        const data = await response.json();
-        alert("Registration successful!");
-        console.log(data);
         window.location.href = '../index.html';
       } else {
         alert("Registration failed");
