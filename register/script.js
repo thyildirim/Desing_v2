@@ -14,11 +14,9 @@ document
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          data: {
-            username: username,
-            email: email,
-            password: password,
-          },
+          username: username,
+          email: email,
+          password: password,
         }),
       });
 

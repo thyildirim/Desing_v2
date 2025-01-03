@@ -13,10 +13,8 @@ document
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          data: {
-            username: username,
-            password: password,
-          },
+          username: username,
+          password: password,
         }),
       });
 
