@@ -5,6 +5,7 @@ window.onload = async function () {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: 'include',
     });
 
     if (response.status === 403) {
@@ -37,6 +38,7 @@ document
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
       });
 
       if (response.status === 201) {

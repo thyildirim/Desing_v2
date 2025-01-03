@@ -16,6 +16,7 @@ document
           username: username,
           password: password,
         }),
+        credentials: 'include',
       });
 
       if (response.ok) {

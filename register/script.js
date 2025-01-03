@@ -18,6 +18,7 @@ document
           email: email,
           password: password,
         }),
+        credentials: 'include',
       });
 
       if (response.ok) {
