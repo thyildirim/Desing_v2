@@ -5,7 +5,7 @@ window.onload = async function () {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: 'include',
+      credentials: "include",
     });
 
     if (response.status === 403) {
@@ -38,15 +38,16 @@ document
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
       });
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         alert("Logged out successfully!");
         document.getElementById("logout-button").style.display = "none";
         document.getElementById("login-button").style.display = "inline-block";
         document.getElementById("register-button").style.display =
           "inline-block";
+        location.reload();
       }
     } catch (error) {
       console.error("Error logging out:", error);
