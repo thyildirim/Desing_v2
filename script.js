@@ -32,7 +32,7 @@ document
   .getElementById("logout-button")
   .addEventListener("click", async function () {
     try {
-      const response = await fetch(`${API_BASE_URL}/logout/`, {
+      const response = await fetch("http://127.0.0.1:4001/auth/logout/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
