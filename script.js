@@ -8,7 +8,7 @@ window.onload = async function () {
       credentials: "include",
     });
 
-    if (response.status === 200) {
+    if (response.ok) {
       document.getElementById("logout-button").style.display = "inline-block";
     } else {
       document.getElementById("login-button").style.display = "inline-block";
@@ -41,7 +41,7 @@ document
         credentials: "include",
       });
 
-      if (response.status === 200) {
+      if (response.ok) {
         alert("Logged out successfully!");
         document.getElementById("logout-button").style.display = "none";
         document.getElementById("login-button").style.display = "inline-block";
