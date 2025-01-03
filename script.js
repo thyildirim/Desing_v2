@@ -8,11 +8,11 @@ window.onload = async function () {
       credentials: "include",
     });
 
-    if (response.status === 403) {
+    if (response.status === 200) {
+      document.getElementById("logout-button").style.display = "inline-block";
+    } else {
       document.getElementById("login-button").style.display = "inline-block";
       document.getElementById("register-button").style.display = "inline-block";
-    } else if (response.status === 200) {
-      document.getElementById("logout-button").style.display = "inline-block";
     }
   } catch (error) {
     console.error("Error making request to /secret:", error);
