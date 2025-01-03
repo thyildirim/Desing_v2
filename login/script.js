@@ -16,7 +16,7 @@ document
           username: username,
           password: password,
         }),
-        credentials: 'include',
+        credentials: "include",
       });
 
       if (response.ok) {

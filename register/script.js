@@ -18,7 +18,7 @@ document
           email: email,
           password: password,
         }),
-        credentials: 'include',
+        credentials: "include",
       });
 
       if (response.ok) {
