@@ -20,7 +20,7 @@ document
       });
 
       if (response.ok) {
-        window.location.href = "../index.html";
+        window.location.href = "../home/index.html";
       } else {
         response.json().then((data) => {
           alert(data.message);
