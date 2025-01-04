@@ -42,7 +42,6 @@ document
       });
 
       if (response.ok) {
-        alert("Logged out successfully!");
         document.getElementById("logout-button").style.display = "none";
         document.getElementById("login-button").style.display = "inline-block";
         document.getElementById("register-button").style.display =
