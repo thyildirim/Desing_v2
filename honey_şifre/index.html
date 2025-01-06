@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA Şifreleme | Polimorfizm Algoritması</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-container">
+          <img src="../static/kilit.png" alt="Genomic Logo">
+        </div>
+          <a href="index.html">Ana Sayfa</a>
+          <div class="dropdown">
+              <button class="dropbtn">Şifrelemeler 
+                  <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                  <a href="sifreleme1.html">Honey Algoritması</a>
+                  <a href="sifreleme2.html">Polimorfizm Algoritması</a>
+              </div>
+          </div> 
+          <div class="dropdown">
+              <button class="dropbtn">Çözümlemeler 
+                  <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                  <a href="cozum1.html">Honey Çözümleme</a>
+                  <a href="cozum2.html">Polimorfizm Çözümleme </a>
+              </div>
+          </div> 
+          <div class="dropdown">
+              <button class="dropbtn">Algoritmalar 
+                  <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                  <a href="algo1.html">Honey Algoritması</a>
+                  <a href="algo2.html">Polimorfizm Algoritması</a>
+              </div>
+          </div> 
+          <div class="nav-right">
+              <a href="login.html" class="auth-links">Login</a>
+              <a href="logout.html" class="auth-links">Logout</a>
+          </div>
+      </div>
+
+    <div class="dna-form">
+        <h2>DNA Şifreleme Formu</h2>
+        <form id="dna-encryption-form">
+            <div class="dna-info">
+                <div class="form-group">
+                    <label for="dna-sequence">DNA Dizisi:</label>
+                    <textarea id="dna-sequence" name="dna-sequence" rows="4" required 
+                        placeholder="Sadece A, T, G, C harflerini kullanarak DNA dizisini girin"></textarea>
+                    <div id="dna-sequence-error" class="validation-error">Geçerli bir DNA dizisi girin (sadece A, T, G, C)</div>
+                </div>
+                <div class="form-group">
+                    <label for="gene-name">Gen İsmi:</label>
+                    <input type="text" id="gene-name" name="gene-name" required>
+                    <div id="gene-name-error" class="validation-error">Lütfen gen ismini girin</div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Gen Açıklaması:</label>
+                    <textarea id="description" name="description" rows="3" 
+                        placeholder="Gen hakkında kısa bir açıklama yazın"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="encryptDNA()">Şifrele</button>
+            </div>
+            <div class="result-container" id="result-container">
+                <h3>Şifreleme Sonucu:</h3>
+                <div class="form-group">
+                    <label for="encrypted-data">Şifrelenmiş DNA:</label>
+                    <textarea id="encrypted-data" rows="4" readonly></textarea>
+                </div>
+                <button type="button" onclick="saveData()">Kaydet</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
