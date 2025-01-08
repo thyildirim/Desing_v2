@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library | Çözümleme</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo-container">
+    <img src='../static/kilit.png' alt="Genomic Logo">
+  </div>
+    <a href="{% url 'index' %}">Ana Sayfa</a>
+    <div class="dropdown">
+        <button class="dropbtn">Şifrelemeler 
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="{% url 'login' %}">Şifreleme 1</a>
+            <a href="{% url 'login' %}">Şifreleme 2</a>
+        </div>
+    </div> 
+    <div class="dropdown">
+        <button class="dropbtn">Çözümlemeler 
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="{% url 'login' %}">Çözümleme A</a>
+            <a href="{% url 'login' %}">Çözümleme B</a>
+        </div>
+    </div> 
+    <div class="dropdown">
+        <button class="dropbtn">Algoritmalar 
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="{% url 'login' %}">Algo A</a>
+            <a href="{% url 'login' %}">Algo B</a>
+        </div>
+    </div> 
+    <div class="nav-right">
+        <a href="{% url 'logout' %}" class="auth-links">Logout</a>
+    </div>
+</div>
+
+<div class="form-container">
+    <h3>Çözümleme</h3>
+    <form id="decryption-form">
+        <div class="form-group">
+            <label for="input-encrypted-data">Şifrelemek istediğiniz şifreli veriyi girin:</label>
+            <textarea id="input-encrypted-data" name="input-encrypted-data" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="encryptData()">Şifrele</button>
+        </div>
+        <div class="form-group">
+            <label for="output-decrypted-data">Şifrelenmiş Veri:</label>
+            <textarea id="output-decrypted-data" name="output-decrypted-data" rows="4" readonly></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit">Kaydet</button>
+        </div>
+    </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
