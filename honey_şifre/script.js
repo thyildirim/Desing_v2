@@ -1,43 +1,64 @@
-function validateDNASequence(sequence) {
-    return /^[ATCG]+$/i.test(sequence.toUpperCase());
-}
+document.addEventListener("DOMContentLoaded", function () {
+    const dnaSequenceInput = document.getElementById("dna-sequence");
+    const geneNameInput = document.getElementById("gene-name");
+    const form = document.querySelector("form");
+    const encryptedDataTextArea = document.getElementById("encrypted-data");
 
-function encryptDNA() {
-    const geneName = document.getElementById('gene-name').value;
-    const dnaSequence = document.getElementById('dna-sequence').value.toUpperCase();
-    
-    let hasError = false;
-    
-    if (!geneName) {
-        document.getElementById('gene-name-error').style.display = 'block';
-        hasError = true;
-    } else {
-        document.getElementById('gene-name-error').style.display = 'none';
+    // DNA dizisinin geçerli olup olmadığını kontrol eden fonksiyon
+    function isValidDNASequence(sequence) {
+        const validDNARegex = /^[ATGC]+$/i; // Sadece A, T, G, C harflerine izin ver
+        return validDNARegex.test(sequence);
     }
 
-    if (!validateDNASequence(dnaSequence)) {
-        document.getElementById('dna-sequence-error').style.display = 'block';
-        hasError = true;
-    } else {
-        document.getElementById('dna-sequence-error').style.display = 'none';
-    }
+    // Form gönderildiğinde şifreleme işlemini başlat
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Formun varsayılan davranışını engelle
 
-    if (hasError) return;
+        // DNA dizisini ve gen adını al
+        const dnaSequence = dnaSequenceInput.value.trim();
+        const geneName = geneNameInput.value.trim();
 
-    let encrypted = '';
-    for (let i = 0; i < dnaSequence.length; i++) {
-        switch(dnaSequence[i]) {
-            case 'A': encrypted += 'T'; break;
-            case 'T': encrypted += 'A'; break;
-            case 'G': encrypted += 'C'; break;
-            case 'C': encrypted += 'G'; break;
+        // Girişleri doğrula
+        if (!isValidDNASequence(dnaSequence)) {
+            alert("Lütfen sadece A, T, G, C harflerini içeren geçerli bir DNA dizisi girin.");
+            return;
         }
+
+        if (geneName === "") {
+            alert("Lütfen bir gen adı girin.");
+            return;
+        }
+
+        // AJAX isteğiyle Django'ya veri gönder
+        fetch("/encrypt/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCSRFToken(), // Django için CSRF token gerekli
+            },
+            body: JSON.stringify({
+                dna_sequence: dnaSequence,
+                gene_name: geneName,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    // Şifrelenmiş veriyi göster
+                    encryptedDataTextArea.value = data.encrypted_data;
+                } else {
+                    alert("Şifreleme işlemi başarısız oldu!");
+                }
+            })
+            .catch((error) => {
+                console.error("Hata:", error);
+                alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
+            });
+    });
+
+    // CSRF token değerini al
+    function getCSRFToken() {
+        const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]");
+        return csrfToken ? csrfToken.value : "";
     }
-
-    document.getElementById('encrypted-data').value = encrypted;
-    document.getElementById('result-container').style.display = 'block';
-}
-
-function saveData() {
-    alert('Şifrelenmiş DNA verisi kaydedildi!');
-}
+});

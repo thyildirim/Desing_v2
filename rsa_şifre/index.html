@@ -8,42 +8,48 @@
 </head>
 <body>
 
-<div class="navbar">
-  <div class="logo-container">
-    <img src='../static/kilit.png' alt="Genomic Logo">
-  </div>
-    <a href="{% url 'index' %}">Ana Sayfa</a>
-    <div class="dropdown">
-        <button class="dropbtn">Şifrelemeler 
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a href="{% url 'login' %}">Şifreleme 1</a>
-            <a href="{% url 'login' %}">Şifreleme 2</a>
+    <div class="navbar">
+        <div class="logo-container">
+          <img src="../static/kilit.png" alt="Genomic Logo">
         </div>
-    </div> 
-    <div class="dropdown">
-        <button class="dropbtn">Çözümlemeler 
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a href="{% url 'login' %}">Çözümleme A</a>
-            <a href="{% url 'login' %}">Çözümleme B</a>
-        </div>
-    </div> 
-    <div class="dropdown">
-        <button class="dropbtn">Algoritmalar 
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a href="{% url 'login' %}">Algo A</a>
-            <a href="{% url 'login' %}">Algo B</a>
-        </div>
-    </div> 
-    <div class="nav-right">
-        <a href="{% url 'logout' %}" class="auth-links">Logout</a>
-    </div>
-</div>
+          <a href="../home/index.html">Ana Sayfa</a>
+          <div class="dropdown">
+              <button class="dropbtn">Şifrelemeler 
+                  <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                  <a href="../honey_şifre/index.html">Honey Algoritması</a>
+                  <a href="../homo_şifre/index.html">Homomorfik Algoritması</a>
+                  <a href="../rsa_şifre/index.html">Rsa Algoritması</a>
+
+              </div>
+          </div> 
+          <div class="dropdown">
+              <button class="dropbtn">Çözümlemeler 
+                  <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                  <a href="../honey_çözümleme/index.html">Honey Çözümleme</a>
+                  <a href="../homomorfik_çözüm/index.html">Homomorfik Çözümleme </a>
+                  <a href="../rsa_çözüm/">Rsa Algoritması</a>
+
+              </div>
+          </div> 
+          <div class="dropdown">
+              <button class="dropbtn">Algoritmalar 
+                  <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                  <a href="../honey_home/index.html">Honey Algoritması</a>
+                  <a href="../homom_Home/index.html">Homomorfik Algoritması</a>
+                  <a href="../rsa_home/index.html">Rsa Algoritması</a>
+
+              </div>
+          </div> 
+          <div class="nav-right">
+              <a href="logout.html" class="auth-links">Logout</a>
+          </div>
+      </div>
 
 <div class="form-container">
     <h3>Çözümleme</h3>
