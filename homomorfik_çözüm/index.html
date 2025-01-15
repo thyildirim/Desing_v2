@@ -5,6 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library | Çözümleme</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        function decryptData() {
+    const encryptedData = document.getElementById('input-encrypted-data').value;
+
+    // Eğer şifreli veri boşsa, kullanıcıyı uyar
+    if (!encryptedData) {
+        alert('Lütfen şifrelenmiş veriyi girin.');
+        return;
+    }
+
+    const payload = {
+        encrypted_value: encryptedData,
+    };
+
+    // AJAX isteği ile backend'e veri gönder
+    fetch('http://127.0.0.1:4001/enc/decrypt_data/', {  // URL'yi backend'e göre güncelle
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Tekrar deneyiz ');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.decrypted) {
+            document.getElementById('output-decrypted-data').value = data.decrypted;
+        } else if (data.error && data.error.includes('Şifre çözülemedi')) {
+            alert('Hata! Şifre yanlış olabilir.');
+        } else {
+            alert('Veri çözülmedi.');
+        }
+    })
+    .catch(error => {
+        console.error('Hata:', error);
+        alert('Çözümleme sırasında bir hata oluştu ! ' + error.message);
+    });
+}
+
+    </script>
 </head>
 <body>
 
@@ -12,65 +56,58 @@
         <div class="logo-container">
           <img src="../static/kilit.png" alt="Genomic Logo">
         </div>
-          <a href="../home/index.html">Ana Sayfa</a>
-          <div class="dropdown">
-              <button class="dropbtn">Şifrelemeler 
-                  <i class="fa fa-caret-down"></i>
-              </button>
-              <div class="dropdown-content">
-                  <a href="../honey_şifre/index.html">Honey Algoritması</a>
-                  <a href="../homo_şifre/index.html">Homomorfik Algoritması</a>
-                  <a href="../rsa_şifre/index.html">Rsa Algoritması</a>
-
-              </div>
-          </div> 
-          <div class="dropdown">
-              <button class="dropbtn">Çözümlemeler 
-                  <i class="fa fa-caret-down"></i>
-              </button>
-              <div class="dropdown-content">
-                  <a href="../honey_çözümleme/index.html">Honey Çözümleme</a>
-                  <a href="../homomorfik_çözüm/index.html">Homomorfik Çözümleme </a>
-                  <a href="../rsa_çözüm/">Rsa Algoritması</a>
-
-              </div>
-          </div> 
-          <div class="dropdown">
-              <button class="dropbtn">Algoritmalar 
-                  <i class="fa fa-caret-down"></i>
-              </button>
-              <div class="dropdown-content">
-                  <a href="../honey_home/index.html">Honey Algoritması</a>
-                  <a href="../homom_Home/index.html">Homomorfik Algoritması</a>
-                  <a href="../rsa_home/index.html">Rsa Algoritması</a>
-
-              </div>
-          </div> 
-          <div class="nav-right">
-              <a href="logout.html" class="auth-links">Logout</a>
-          </div>
-      </div>
-
-<div class="form-container">
-    <h3>Çözümleme</h3>
-    <form id="decryption-form">
-        <div class="form-group">
-            <label for="input-encrypted-data">Çözümlemek istediğiniz şifreli veriyi girin:</label>
-            <textarea id="input-encrypted-data" name="input-encrypted-data" rows="4"></textarea>
+        <a href="../home/index.html">Ana Sayfa</a>
+        <div class="dropdown">
+            <button class="dropbtn">Şifrelemeler 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../honey_şifre/index.html">Honey Algoritması</a>
+                <a href="../homo_şifre/index.html">Homomorfik Algoritması</a>
+                <a href="../rsa_şifre/index.html">Rsa Algoritması</a>
+            </div>
+        </div> 
+        <div class="dropdown">
+            <button class="dropbtn">Çözümlemeler 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../honey_çözümleme/index.html">Honey Çözümleme</a>
+                <a href="../homomorfik_çözüm/index.html">Homomorfik Çözümleme</a>
+                <a href="../rsa_çözüm/">Rsa Algoritması</a>
+            </div>
+        </div> 
+        <div class="dropdown">
+            <button class="dropbtn">Algoritmalar 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="../honey_home/index.html">Honey Algoritması</a>
+                <a href="../homom_Home/index.html">Homomorfik Algoritması</a>
+                <a href="../rsa_home/index.html">Rsa Algoritması</a>
+            </div>
+        </div> 
+        <div class="nav-right">
+            <a href="logout.html" class="auth-links">Logout</a>
         </div>
-        <div class="form-group">
-            <button type="button" onclick="decryptData()">Çözümle</button>
-        </div>
-        <div class="form-group">
-            <label for="output-decrypted-data">Çözümlenmiş Veri:</label>
-            <textarea id="output-decrypted-data" name="output-decrypted-data" rows="4" readonly></textarea>
-        </div>
-        <div class="form-group">
-            <button type="submit">Kaydet</button>
-        </div>
-    </form>
-</div>
+    </div>
 
-<script src="script.js"></script>
+    <div class="form-container">
+        <h3>Çözümleme</h3>
+        <form id="decryption-form">
+            <div class="form-group">
+                <label for="input-encrypted-data">Çözümlemek istediğiniz şifreli veriyi girin:</label>
+                <textarea id="input-encrypted-data" name="input-encrypted-data" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="decryptData()">Çözümle</button>
+            </div>
+            <div class="form-group">
+                <label for="output-decrypted-data">Çözümlenmiş Veri:</label>
+                <textarea id="output-decrypted-data" name="output-decrypted-data" rows="4" readonly></textarea>
+            </div>
+        </form>
+    </div>
+
 </body>
 </html>

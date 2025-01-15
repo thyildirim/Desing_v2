@@ -86,24 +86,80 @@
 
     <script>
         function encryptDNA() {
-    const dnaSequence = document.getElementById('dna-sequence').value;
-    const geneName = document.getElementById('gene-name').value;
+            const dnaSequence = document.getElementById('dna-sequence').value;
+            const geneName = document.getElementById('gene-name').value;
 
-    // Geçerli DNA dizisi olup olmadığını kontrol et
-    const validDNA = /^[ATGC]+$/i.test(dnaSequence);
-    if (!validDNA) {
-        document.getElementById('dna-sequence-error').style.display = 'block';
+            // Geçerli DNA dizisi olup olmadığını kontrol et
+            const validDNA = /^[ATGC]+$/i.test(dnaSequence);
+            if (!validDNA) {
+                document.getElementById('dna-sequence-error').style.display = 'block';
+                return;
+            }
+            document.getElementById('dna-sequence-error').style.display = 'none';
+
+            const payload = {
+                sequence: dnaSequence,
+                gene_name: geneName
+            };
+
+            // AJAX isteği ile backend'e veri gönder
+            fetch('http://127.0.0.1:4001/enc/homo_sifre/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            })
+            .then(response => {
+                // Check if the response is okay
+                if (!response.ok) {
+                    throw new Error('Backend error: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.encrypted) {
+                    console.log('Encrypted Data:', data.encrypted); // Şifreli veri burada yazılmalı
+                    document.getElementById('encrypted-data').value = data.encrypted;
+                    document.getElementById('result-container').style.display = 'block'; // Sonuçları göster
+                } else {
+                    alert('Şifreleme işlemi başarısız oldu.');
+                }
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+                alert('Şifreleme işlemi sırasında bir hata oluştu: ' + error.message);
+            });
+        }
+
+        
+        function saveData() {
+    const encryptedData = document.getElementById('encrypted-data').value;
+    const geneName = document.getElementById('gene-name').value;
+    const description = document.getElementById('description').value;
+    const dnaSequence = document.getElementById('dna-sequence').value;  // Şifrelenmemiş veriyi alıyoruz
+
+    console.log('Encrypted Data:', encryptedData); // Şifrelenmiş veriyi kontrol et
+    console.log('Original DNA Sequence:', dnaSequence); // Şifrelenmemiş veriyi kontrol et
+
+    // Eğer boş veri varsa, kullanıcıyı uyar
+    if (!encryptedData || !geneName) {
+        alert('Şifrelenmiş veri ve gen ismi zorunludur!');
         return;
     }
-    document.getElementById('dna-sequence-error').style.display = 'none';
 
+    // JSON verisini oluştur
     const payload = {
-        sequence: dnaSequence,
-        gene_name: geneName
+        sequence: dnaSequence,  // Şifrelenmemiş veriyi ekliyoruz
+        encrypted_sequence: encryptedData,
+        gene_name: geneName,
+        description: description
     };
 
+    console.log('Payload:', payload); // Payload'u kontrol edin
+
     // AJAX isteği ile backend'e veri gönder
-    fetch('http://127.0.0.1:4001/enc/homo_sifre', {
+    fetch('http://127.0.0.1:4001/enc/save_encrypted_data/', {  // URL'yi güncelle
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -111,31 +167,23 @@
         body: JSON.stringify(payload),
     })
     .then(response => {
-        // Check if the response is okay
         if (!response.ok) {
-            throw new Error('Backend error: ' + response.statusText);
+            throw new Error('Failed to save data');
         }
         return response.json();
     })
     .then(data => {
-        if (data.encrypted) {
-            document.getElementById('encrypted-data').value = data.encrypted;
-            document.getElementById('result-container').style.display = 'block'; // Sonuçları göster
-        } else {
-            alert('Şifreleme işlemi başarısız oldu.');
-        }
+        alert('Veri başarıyla kaydedildi!');
     })
     .catch(error => {
         console.error('Hata:', error);
-        alert('Şifreleme işlemi sırasında bir hata oluştu: ' + error.message);
+        alert('Veri kaydedilemedi: ' + error.message);
     });
 }
 
-// Kaydetme fonksiyonu (isteğe bağlı)
-function saveData() {
-    // Burada kullanıcı veriyi kaydedebilir
-    alert("Veri kaydedildi!");
-}
+
+
+
 
     </script>
 </body>

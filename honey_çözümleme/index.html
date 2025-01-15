@@ -154,6 +154,10 @@
             <textarea id="input-encrypted-data" name="input-encrypted-data" rows="4"></textarea>
         </div>
         <div class="form-group">
+            <label for="input-key">Anahtar (Key):</label>
+            <textarea id="input-key" name="input-key" rows="1"></textarea>
+        </div>
+        <div class="form-group">
             <button type="button" onclick="decryptData()">Çözümle</button>
         </div>
         <div class="form-group">
@@ -165,34 +169,44 @@
 
 <script>
     function decryptData() {
-        const encryptedData = document.getElementById("input-encrypted-data").value.trim();
+    const encryptedData = document.getElementById("input-encrypted-data").value.trim();
+    const key = document.getElementById("input-key").value.trim();
 
-        if (!encryptedData) {
-            alert("Lütfen geçerli bir şifreli veri girin.");
-            return;
-        }
-
-        const data = { encrypted_data: encryptedData };
-
-        fetch('/decrypt/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                document.getElementById("output-decrypted-data").value = result.decrypted_data;
-            } else {
-                alert("Çözümleme sırasında bir hata oluştu: " + result.message);
-            }
-        })
-        .catch(error => {
-            alert("Bir hata oluştu: " + error.message);
-        });
+    if (!encryptedData || !key) {
+        alert("Lütfen şifreli veri ve anahtar alanlarını doldurun.");
+        return;
     }
+
+    const data = {
+        encrypted_data: encryptedData,
+        key: key
+    };
+
+    fetch('http://localhost:4001/honey/decrypt/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(result => {
+        if (result.success) {
+            document.getElementById("output-decrypted-data").value = result.decrypted_data;
+        } else {
+            alert("Çözümleme sırasında bir hata oluştu: " + result.message);
+        }
+    })
+    .catch(error => {
+        alert("Bir hata oluştu: " + error.message);
+    });
+}
+
 </script>
 
 </body>

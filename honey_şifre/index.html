@@ -3,8 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DNA Şifreleme | Honey Algoritması</title>
+    <title>DNA Şifreleme | Homomorfik Algoritması</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        function generateFakeDNA(length) {
+            const charset = "ACGT";
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+            return result;
+        }
+
+        function honeyEncrypt(dnaSequence, key) {
+            const combinedSequence = dnaSequence + key;
+            return btoa(combinedSequence);  // Base64 encoding
+        }
+
+        function honeyDecrypt(encryptedData, key, correctKey) {
+            if (key === correctKey) {
+                const decodedData = atob(encryptedData);
+                return decodedData.slice(0, decodedData.length - key.length);  // Remove key part
+            } else {
+                return generateFakeDNA(encryptedData.length);
+            }
+        }
+
+        function encryptDNA() {
+            const dnaSequence = document.getElementById('dna-sequence').value;
+            const geneName = document.getElementById('gene-name').value;
+            const description = document.getElementById('description').value;
+            const key = document.getElementById('key').value;
+
+            // Şifreleme işlemi
+            const encryptedData = honeyEncrypt(dnaSequence, key);
+            document.getElementById('encrypted-data').innerText = encryptedData;
+            document.getElementById('result-container').style.display = "block"; // Sonuç kısmını göster
+
+            // JSON verisini Django backend'e gönder
+            fetch('/encrypt/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ dna_sequence: dnaSequence, gene_name: geneName, description: description, key: key })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Şifrelenmiş veriyi ekrana yazdır
+                document.getElementById('encrypted-data').innerText = data.encrypted_data;
+            });
+        }
+
+        function saveData() {
+    const dnaSequence = document.getElementById('dna-sequence').value;
+    const key = document.getElementById('key').value;
+    const geneName = document.getElementById('gene-name').value;
+    const description = document.getElementById('description').value;
+
+    // Verilerin doğru şekilde gönderildiğinden emin olun
+    const dataToSend = {
+        sequence: dnaSequence,
+        gene_name: geneName,
+        gen_description: description,
+        key: key
+    };
+
+    // Verileri Django backend'e gönder
+    fetch('http://localhost:4001/honey/encrypt/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)  // JSON.stringify ile veriyi düzgün şekilde JSON'a çevir
+    })
+    .then(response => {
+    if (!response.ok) {
+        return response.text().then(errorText => {
+            throw new Error('Response not ok: ' + errorText);
+        });
+    }
+    return response.json();
+})
+    .then(data => {
+        if (data.decrypted_data) {
+            alert('Veri başarıyla kaydedildi');
+            document.getElementById('encrypted-data').value = data.decrypted_data; // Şifrelenmiş veriyi göster
+        } else {
+            alert('Hata: ' + data.error); // Hata mesajını göster
+        }
+    })
+    .catch(error => {
+        console.error('Hata:', error);
+        alert('Bir hata oluştu: ' + error.message);  // Genel hata mesajını göster
+    });
+}
+
+
+    </script>
 </head>
 <body>
     <div class="navbar">
@@ -28,7 +122,7 @@
             </button>
             <div class="dropdown-content">
                 <a href="../honey_çözümleme/index.html">Honey Çözümleme</a>
-                <a href="../homomorfik_çözüm/index.html">Homomorfik Çözümleme</a>
+                <a href="../homomorfik_çözüm/index.html">Homomorfik Çözümleme </a>
                 <a href="../rsa_çözüm/">Rsa Algoritması</a>
             </div>
         </div> 
@@ -49,80 +143,43 @@
 
     <div class="dna-form">
         <h2>DNA Honey Algoritması ile Şifreleme Formu</h2>
-        <form id="dna-form">
+        <form id="dna-encryption-form">
             <div class="dna-info">
                 <div class="form-group">
                     <label for="dna-sequence">DNA Dizisi:</label>
                     <textarea id="dna-sequence" name="dna-sequence" rows="4" required 
-                              placeholder="Sadece A, T, G, C harflerini kullanarak DNA dizisini girin"></textarea>
-                    <div id="dna-error" class="validation-error" style="display:none;">Geçersiz DNA dizisi. Sadece A, T, G, C harflerini kullanın.</div>
+                        placeholder="Sadece A, T, G, C harflerini kullanarak DNA dizisini girin"></textarea>
+                    <div id="dna-sequence-error" class="validation-error">Geçerli bir DNA dizisi girin (sadece A, T, G, C)</div>
                 </div>
                 <div class="form-group">
                     <label for="gene-name">Gen İsmi:</label>
-                    <input type="text" id="gene-name" name="gene-name" required placeholder="Gen ismini girin">
-                    <div id="gene-name-error" class="validation-error" style="display:none;">Lütfen gen ismini girin.</div>
+                    <input type="text" id="gene-name" name="gene-name" required>
+                    <div id="gene-name-error" class="validation-error">Lütfen gen ismini girin</div>
                 </div>
                 <div class="form-group">
                     <label for="description">Gen Açıklaması:</label>
                     <textarea id="description" name="description" rows="3" 
                         placeholder="Gen hakkında kısa bir açıklama yazın"></textarea>
                 </div>
-           
                 <div class="form-group">
-                    <button type="submit">Şifrele</button>
+                    <label for="key">Şifreleme Anahtarı:</label>
+                    <input type="text" id="key" name="key" required placeholder="Şifreleme için anahtar girin">
                 </div>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="encryptDNA()">Şifrele</button>
+            </div>
+
+            <!-- Şifreleme Sonucu Gösterimi -->
+            <div class="result-container" id="result-container" style="display: none;">
+                <h3>Şifreleme Sonucu:</h3>
+                <div class="form-group">
+                    <label for="encrypted-data">Şifrelenmiş DNA:</label>
+                    <textarea id="encrypted-data" rows="4" readonly></textarea>
+                </div>
+                <button type="button" onclick="saveData()">Kaydet</button>
             </div>
         </form>
     </div>
-
-    <div id="result-container" class="result-container" style="display:none;">
-        <h3>Şifreleme Sonucu:</h3>
-        <div class="form-group">
-            <label for="original-sequence">Orijinal DNA Dizisi:</label>
-            <textarea id="original-sequence" rows="4" readonly></textarea>
-        </div>
-        <div class="form-group">
-            <label for="encrypted-data">Şifrelenmiş DNA:</label>
-            <textarea id="encrypted-data" rows="4" readonly></textarea>
-        </div>
-    </div>
-
-    <script>
-    // Formu işleme
-    document.getElementById("dna-form").addEventListener("submit", function(event) {
-        event.preventDefault(); // Formun normal submit işlemini engelle
-
-        // Form verilerini al
-        const dnaSequence = document.getElementById("dna-sequence").value;
-        const geneName = document.getElementById("gene-name").value;
-
-        // Şifreleme işlemi
-        const encryptedData = encrypt(dnaSequence, geneName);
-
-        // Sonuçları ekrana göster
-        document.getElementById("original-sequence").value = dnaSequence;
-        document.getElementById("encrypted-data").value = encryptedData;
-
-        // Sonuç konteynerini göster
-        document.getElementById("result-container").style.display = "block";
-    });
-
-    // Şifreleme işlemi (Base64 ile)
-    function encrypt(dnaSequence, geneName) {
-        const key = geneName; // Anahtar olarak gen adını kullan
-        const data = dnaSequence + key; // DNA dizisi ve anahtarı birleştir
-        const encodedData = btoa(data); // Base64 ile şifrele
-        return encodedData;
-    }
-
-    // Şifre çözme işlemi (isteğe bağlı)
-    function decrypt(encryptedData, geneName) {
-        const decodedData = atob(encryptedData); // Base64 çözme
-        const dnaSequence = decodedData.replace(geneName, ''); // Anahtarı çıkar
-        return dnaSequence;
-    }
-</script>
-
-</script>
 </body>
 </html>
