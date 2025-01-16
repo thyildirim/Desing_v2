@@ -63,7 +63,7 @@
 
                 // AJAX isteği ile şifreleme işlemi
                 $.ajax({
-                    url: 'http://127.0.0.1:4001/rsa/encrypt/',  // API endpoint URL'si
+                    url: 'http://127.0.0.1:4001/rsa/encrypt/',  // Full URL for encryption endpoint
                     method: 'POST',
                     data: JSON.stringify({ sequence: sequence }),
                     contentType: 'application/json',
@@ -78,7 +78,7 @@
                     },
                     error: function(error) {
                         console.log(error);
-                        document.getElementById("status").textContent = "Şifreleme sırasında bir hata oluştu.";
+                        document.getElementById("status").textContent = error.responseJSON.error;
                     }
                 });
             }
@@ -103,7 +103,7 @@
 
                 // AJAX isteği ile veriyi kaydetme
                 $.ajax({
-                    url: 'http://127.0.0.1:4001/rsa/save-encrypted-dna/',  // API endpoint URL'si
+                    url: 'http://127.0.0.1:4001/rsa/save-encrypted-dna/',  // Full URL for saving endpoint
                     method: 'POST',
                     data: JSON.stringify({
                         gene_name: geneName,
