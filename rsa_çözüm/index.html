@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library | Çözümleme</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/jsencrypt"></script>
-    <script src="script.js" defer></script>
 </head>
 <body>
 
@@ -52,14 +50,8 @@
 
     <div class="form-container">
         <h3>Şifreleme ve Çözümleme</h3>
-        <form id="encryption-form">
-            
-            <div class="form-group">
-                <label for="output-encrypted-data">Şifrelenmiş Veri:</label>
-                <textarea id="output-encrypted-data" name="output-encrypted-data" rows="4" readonly></textarea>
-            </div>
-        </form>
-        <form id="decryption-form">
+        
+        <form id="decryption-form" onsubmit="return false;">
             <div class="form-group">
                 <label for="input-encrypted-data">Çözümlemek istediğiniz şifreli veriyi girin:</label>
                 <textarea id="input-encrypted-data" name="input-encrypted-data" rows="4"></textarea>
@@ -72,53 +64,47 @@
                 <textarea id="output-decrypted-data" name="output-decrypted-data" rows="4" readonly></textarea>
             </div>
         </form>
+
+        <form id="encryption-form" onsubmit="return false;">
+            <div class="form-group">
+                <label for="input-plain-data">Şifrelemek istediğiniz veriyi girin:</label>
+                <textarea id="input-plain-data" name="input-plain-data" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="encryptData()">Şifrele</button>
+            </div>
+            <div class="form-group">
+                <label for="output-encrypted-data">Şifrelenmiş Veri:</label>
+                <textarea id="output-encrypted-data" name="output-encrypted-data" rows="4" readonly></textarea>
+            </div>
+        </form>
     </div>
 
     <script>
+        // Çözümleme fonksiyonu
+        function decryptData() {
+            const encryptedData = document.getElementById("input-encrypted-data").value;
+
+            fetch('http://127.0.0.1:4001/rsa/decrypt-dna/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ encrypted_message: encryptedData })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const decryptedData = data.decrypted_message;
+                document.getElementById("output-decrypted-data").value = decryptedData;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Çözümleme sırasında bir hata oluştu.");
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
-            // Şifreleme fonksiyonu
-            function encryptData() {
-                const plainData = document.getElementById("input-plain-data").value;
-
-                // AJAX isteği ile şifreleme işlemi
-                $.ajax({
-                    url: 'http://127.0.0.1:4001/rsa/encrypt-dna/',  // API endpoint URL'si
-                    method: 'POST',
-                    data: JSON.stringify({ sequence: plainData }),
-                    contentType: 'application/json',
-                    success: function(response) {
-                        // Şifreli veriyi textarea'ya yerleştirme
-                        const encryptedData = response.encrypted_data;
-                        document.getElementById("output-encrypted-data").value = encryptedData;
-                    },
-                    error: function(error) {
-                        console.log(error);
-                        alert("Şifreleme sırasında bir hata oluştu.");
-                    }
-                });
-            }
-
-            // Çözümleme fonksiyonu
-            function decryptData() {
-                const encryptedData = document.getElementById("input-encrypted-data").value;
-
-                // AJAX isteği ile çözümleme işlemi
-                $.ajax({
-                    url: 'http://127.0.0.1:4001/rsa/decrypt-dna/',  // API endpoint URL'si
-                    method: 'POST',
-                    data: JSON.stringify({ encrypted_sequence: encryptedData }),
-                    contentType: 'application/json',
-                    success: function(response) {
-                        // Çözülmüş veriyi textarea'ya yerleştirme
-                        const decryptedData = response.decrypted_data;
-                        document.getElementById("output-decrypted-data").value = decryptedData;
-                    },
-                    error: function(error) {
-                        console.log(error);
-                        alert("Çözümleme sırasında bir hata oluştu.");
-                    }
-                });
-            }
+            // Other initialization code can go here
         });
     </script>
 
