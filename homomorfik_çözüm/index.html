@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library | Çözümleme</title>
+    <title>Homomorfik | Çözümleme</title>
     <link rel="stylesheet" href="style.css">
     <script>
         function decryptData() {
@@ -36,6 +36,7 @@
     .then(data => {
         if (data.decrypted) {
             document.getElementById('output-decrypted-data').value = data.decrypted;
+            alert('Şifreli veri başarı ile çözüldü.');
         } else if (data.error && data.error.includes('Şifre çözülemedi')) {
             alert('Hata! Şifre yanlış olabilir.');
         } else {
@@ -88,12 +89,12 @@
             </div>
         </div> 
         <div class="nav-right">
-            <a href="logout.html" class="auth-links">Logout</a>
+            <a href="../login/index.html" class="auth-links">Logout</a>
         </div>
     </div>
 
     <div class="form-container">
-        <h3>Çözümleme</h3>
+        <h3>Homomorfik Algoritması ile Çözümleme</h3>
         <form id="decryption-form">
             <div class="form-group">
                 <label for="input-encrypted-data">Çözümlemek istediğiniz şifreli veriyi girin:</label>

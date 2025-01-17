@@ -43,12 +43,12 @@
               </div>
           </div> 
           <div class="nav-right">
-              <a href="logout.html" class="auth-links">Logout</a>
+              <a href="../login/index.html" class="auth-links">Logout</a>
           </div>
       </div>
 
     <div class="dna-form">
-        <h2>DNA Şifreleme Formu</h2>
+        <h2>DNA Homomorfik Algoritması ile Şifreleme Formu</h2>
         <form id="dna-encryption-form">
             <div class="dna-info">
                 <div class="form-group">
@@ -78,9 +78,9 @@
                 <div class="form-group">
                     <label for="encrypted-data">Şifrelenmiş DNA:</label>
                     <textarea id="encrypted-data" rows="4" readonly></textarea>
-                </div>
-                <button type="button" onclick="saveData()">Kaydet</button>
-            </div>
+                    <div class="form-group">
+                        <button type="button" onclick="saveData()">Kaydet</button>
+                    </div>
         </form>
     </div>
 
@@ -153,7 +153,7 @@
         sequence: dnaSequence,  // Şifrelenmemiş veriyi ekliyoruz
         encrypted_sequence: encryptedData,
         gene_name: geneName,
-        description: description
+        gen_description: description
     };
 
     console.log('Payload:', payload); // Payload'u kontrol edin

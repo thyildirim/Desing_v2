@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library | Çözümleme</title>
+    <title>DNA Şifreleme | Rsa</title>
     <link rel="stylesheet" href="style.css"> <!-- CSS dosyanızı bağlayın -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token }}"> <!-- CSRF token meta tag'ı -->
@@ -15,15 +15,52 @@
             <img src="../static/kilit.png" alt="Genomic Logo">
         </div>
         <a href="../home/index.html">Ana Sayfa</a>
-        <div class="nav-right">
-            <a href="../login/index.html" class="auth-links">Logout</a>
+        <div class="dropdown">
+        <button class="dropbtn">Şifrelemeler 
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="../honey_şifre/index.html">Honey Algoritması</a>
+            <a href="../homo_şifre/index.html">Homomorfik Algoritması</a>
+            <a href="../rsa_şifre/index.html">Rsa Algoritması</a>
         </div>
+    </div> 
+    <div class="dropdown">
+        <button class="dropbtn">Çözümlemeler 
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="../honey_çözümleme/index.html">Honey Çözümleme</a>
+            <a href="../homomorfik_çözüm/index.html">Homomorfik Çözümleme </a>
+            <a href="../rsa_çözüm/index.html">Rsa Çözümleme </a>
+
+        </div>
+    </div> 
+    <div class="dropdown">
+        <button class="dropbtn">Algoritmalar 
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="../honey_home/index.html">Honey Algoritması</a>
+            <a href="../homom_Home/">Homomorfik Algoritması</a>
+            <a href="../rsa_home/index.html">Rsa Algoritması</a>
+
+        </div>
+    </div> 
+    <div class="nav-right">
+        <a href="../login/index.html" class="auth-links">Logout</a>
+    </div>
+</div>
     </div>
 
     <div class="form-container">
-        <h3>Veri Şifreleme</h3>
+        <h3>DNA Rsa Algoritması ile Şifreleme Formu</h3>
         <form id="encryption-form">
             <div class="form-group">
+                <div class="form-group">
+                    <label for="sequence">Dna dizisi:</label>
+                    <textarea id="sequence" name="sequence" rows="4" required></textarea>
+                </div>
                 <label for="gene_name">Gen Adı:</label>
                 <input type="text" id="gene_name" name="gene_name" required>
             </div>
@@ -31,18 +68,15 @@
                 <label for="gen_description">Gen Açıklaması:</label>
                 <textarea id="gen_description" name="gen_description" rows="4" required></textarea>
             </div>
-            <div class="form-group">
-                <label for="sequence">Sequence:</label>
-                <textarea id="sequence" name="sequence" rows="4" required></textarea>
-            </div>
+            
             <div class="form-group">
                 <button type="button" id="encrypt-btn">Şifrele</button>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="encrypted-sequence-group" style="display: none;">
                 <label for="output-encrypted-sequence">Şifreli Sequence:</label>
                 <textarea id="output-encrypted-sequence" name="output-encrypted-sequence" rows="4" readonly></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="save-btn-group" style="display: none;">
                 <button type="button" id="save-btn">Kaydet</button> <!-- OnClick yerine ID ile bağlanacak -->
             </div>
         </form>
@@ -74,7 +108,11 @@
                         // Şifreli veriyi textarea'ya yerleştirme
                         const encryptedSequence = response.encrypted_data;
                         document.getElementById("output-encrypted-sequence").value = encryptedSequence;
-                        document.getElementById("status").textContent = "Şifreleme işlemi başarılı!";
+                        alert("Şifreleme işlemi başarılı!");
+                        
+                        // Şifreli Sequence ve Kaydet butonunu göster
+                        document.getElementById("encrypted-sequence-group").style.display = "block";
+                        document.getElementById("save-btn-group").style.display = "block";
                     },
                     error: function(error) {
                         console.log(error);
@@ -117,6 +155,11 @@
                     },
                     success: function(response) {
                         alert("Veri başarıyla kaydedildi!");
+                        // Form verilerini temizle
+                        document.getElementById("encryption-form").reset();
+                        document.getElementById("output-encrypted-sequence").value = "";
+                        document.getElementById("encrypted-sequence-group").style.display = "none";
+                        document.getElementById("save-btn-group").style.display = "none";
                     },
                     error: function(error) {
                         console.log(error);

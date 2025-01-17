@@ -3,9 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Honey Encryption</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: #444;
+            color: #fff;
+            padding: 10px 15px;
+            text-align: center;
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #444;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background: #444;
+            color: #fff;
+        }
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: lightblue;
+}
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    top: 0;
+    width: 100%;
+}
+.navbar img {
+    height: 50px;
+    float: left;
+    padding: 5px 10px;
+}
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.navbar a:hover, .dropdown:hover .dropbtn, .dropdown-content a:hover, .nav-right .auth-links:hover {
+    background-color: grey;
+    color: black;
+}
+.nav-right {
+    float: right;
+}
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 50px;
+}
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+h1 {
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 30px;
+    font-size: 100px;
+}
+/* Başlık için stil */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 80vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://cdn.pixabay.com/photo/2016/11/19/14/00/dna-1835026_960_720.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin: 0;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Hakkında Bölümü */
+.about {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.about h2 {
+    font-size: 2.5rem;
+    color: #007acc;
+}
+
+.about p {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-size: 1.2rem;
+}
+
+/* Bilgi Kartları */
+.info-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 40px 20px;
+}
+
+.card {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    color: #007acc;
+    font-size: 1.5rem;
+}
+
+.card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+    </style>
 </head>
 <body>
-    honey algo
+    <div class="navbar">
+        <div class="logo-container">
+          <img src='../static/kilit.png' alt="Genomic Logo">
+        </div>
+          <a href="../home/index.html">Ana Sayfa</a>
+          <div class="dropdown">
+              <button class="dropbtn">Şifrelemeler 
+                  <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                  <a href="../honey_şifre/index.html">Honey Algoritması</a>
+                  <a href="../homo_şifre/index.html">Homomorfik Algoritması</a>
+                  <a href="../rsa_şifre/index.html">Rsa Algoritması</a>
+              </div>
+          </div> 
+          <div class="dropdown">
+              <button class="dropbtn">Çözümlemeler 
+                  <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                  <a href="../honey_çözümleme/index.html">Honey Çözümleme</a>
+                  <a href="../homomorfik_çözüm/index.html">Homomorfik Çözümleme </a>
+                  <a href="../rsa_çözüm/index.html">Rsa Çözümleme </a>
+      
+              </div>
+          </div> 
+          <div class="dropdown">
+              <button class="dropbtn">Algoritmalar 
+                  <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                  <a href="../honey_home/index.html">Honey Algoritması</a>
+                  <a href="../homom_Home/">Homomorfik Algoritması</a>
+                  <a href="../rsa_home/index.html">Rsa Algoritması</a>
+      
+              </div>
+          </div> 
+          <div class="nav-right">
+              <a href="../login/index.html" class="auth-links">Logout</a>
+          </div>
+      </div>
+    <main>
+        </ul>
+        <h2>Honey Encryption Algoritması</h2>
+        <p>Honey Encryption (HE), yanlış anahtarlar kullanıldığında gerçeğe benzeyen ancak yanlış metinler döndüren bir şifreleme tekniğidir. Bu yaklaşım, saldırganların veriyi doğru şekilde çözümleyip çözümleyemediklerini anlamalarını son derece zorlaştırarak, şifrelenmiş bilgilerin güvenliğini artırır.</p>
+    
+        <h2>Honey Encryption Nasıl Çalışır?</h2>
+        <p>Honey Encryption algoritması, her yanlış anahtar için sahte mesajlar (decoy) üretir. Bu sahte mesajlar, doğru metinlerden ayırt edilemez şekilde tasarlanır ve saldırganları, kaba kuvvet denemelerinin başarılı olduğuna inandırır.</p>
+    
+        <h2>Uygulama Alanları</h2>
+        <ul>
+            <li>DNA şifreleme ile hassas genetik verilerin korunması.</li>
+            <li>Şifre korumalı biyolojik verilerin güvence altına alınması.</li>
+            <li>Genetik analiz sistemlerinde siber güvenliğin artırılması.</li>
+        </ul>
+    
+        <h2>Örnek: DNA Şifreleme</h2>
+        <p>Honey Encryption, DNA dizilimlerini şifrelemek için şu şekilde uygulanabilir:</p>
+        <ul>
+            <li>DNA dizisi şifrelenirken bir giriş anahtarı kullanılır.</li>
+            <li>Yanlış bir anahtar kullanılarak şifre çözülmeye çalışıldığında, doğruya benzeyen ancak tamamen yanlış bir DNA dizisi elde edilir.</li>
+            <li>Bu yöntem, genetik verilerin yetkisiz erişimlere karşı korunmasını sağlar.</li>
+        </ul>
+    
+        <h2>Honey Encryption Avantajları</h2>
+        <ul>
+            <li>Saldırganları yanlış sonuçlarla yanıltır.</li>
+            <li>Düşük entropili biyolojik anahtarlarda bile yüksek güvenlik sağlar.</li>
+            <li>Hassas genetik bilgilerin gizliliğini artırır.</li>
+        </ul>
+    </main>
 </body>
 </html>

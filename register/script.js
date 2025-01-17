@@ -30,8 +30,7 @@ document.getElementById("register-form").addEventListener("submit", async functi
 
     // Backend'den başarılı yanıt alırsak
     if (response.ok) {
-      alert("Registration successful!");
-      window.location.href = "http://127.0.0.1:4001/login/index.html";  // Tam URL
+      alert("Başarı ile üye oldunuz !");
 
       
 
